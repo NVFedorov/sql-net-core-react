@@ -46,13 +46,13 @@ namespace SPAExample.DAL.Repository
                 await connection.OpenAsync();
                 using (var command = connection.CreateCommand())
                 {
+                    var TypeT = typeof(T);
                     command.CommandType = CommandType.Text;
-                    command.CommandText = "SELECT [Id], [Name] FROM [TestData].[dbo].[Roles]";
+                    command.CommandText = $"SELECT * FROM [{TypeT.GetTableName()}]";
 
                     var reader = await command.ExecuteReaderAsync();
                     try
                     {
-                        var TypeT = typeof(T);
                         while (await reader.ReadAsync())
                         {
                             // I realize that it's an overhead and reinventing a wheel
